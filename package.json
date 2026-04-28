@@ -1,0 +1,10 @@
+{
+  "name": "omma-shift-management",
+  "version": "1.0.0",
+  "description": "Static HTML files for OMMA Shifts",
+  "scripts": {
+    "dev": "npx -y serve@latest . -l 3000",
+    "build": "echo 'No build required for pure HTML/CSS. Ready to use.'",
+    "start": "npx -y serve@latest . -l 3000"
+  }
+}
