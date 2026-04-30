@@ -24,7 +24,7 @@
       <p class="text-zinc-400 text-xs tracking-widest uppercase">Διαχειριση Βαρδιων & Προσωπικου</p>
     </div>
     
-    <div class="p-8">
+    <div class="p-8" id="loginContainer">
       <form onsubmit="handleLogin(event)" class="space-y-6">
         <div>
           <label class="block text-xs font-semibold text-zinc-500 uppercase tracking-widest mb-2">Ηλεκτρονικη Διευθυνση</label>
@@ -37,12 +37,88 @@
         <button type="submit" class="w-full bg-black text-white font-medium py-4 tracking-[0.2em] uppercase text-sm hover:bg-zinc-800 transition mt-2">
           Εισοδος στο Συστημα
         </button>
+        <div class="text-center mt-4 pt-2">
+             <button type="button" onclick="showRegisterStep1()" class="text-[10px] text-zinc-500 hover:text-black uppercase tracking-widest font-semibold transition">Δημιουργια Νεου Λογαριασμου</button>
+        </div>
       </form>
+    </div>
+
+    <div class="p-8 hidden" id="registerStep1Container">
+      <form onsubmit="handleRegisterStep1(event)" class="space-y-6">
+        <div>
+          <label class="block text-xs font-semibold text-zinc-500 uppercase tracking-widest mb-2">Email Εγγραφης</label>
+          <input id="regEmail" type="email" placeholder="email@example.com" class="w-full px-4 py-3 border border-zinc-300 rounded-none focus:ring-1 focus:ring-black focus:border-black outline-none transition bg-zinc-50 font-medium placeholder-zinc-400" required />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-zinc-500 uppercase tracking-widest mb-2">Νεος Κωδικος</label>
+          <input type="password" placeholder="••••••••" class="w-full px-4 py-3 border border-zinc-300 rounded-none focus:ring-1 focus:ring-black focus:border-black outline-none transition bg-zinc-50 placeholder-zinc-400" required />
+        </div>
+        <button type="submit" class="w-full bg-black text-white font-medium py-4 tracking-[0.2em] uppercase text-sm hover:bg-zinc-800 transition mt-2">
+          Επομενο
+        </button>
+        <div class="text-center mt-4 pt-2">
+             <button type="button" onclick="showLogin()" class="text-[10px] text-zinc-500 hover:text-black uppercase tracking-widest font-semibold transition">Επιστροφη στην Εισοδο</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="p-8 hidden" id="registerStep2Container">
+       <form onsubmit="handleRegisterSubmit(event)" class="space-y-6">
+          <p class="text-xs font-semibold text-zinc-500 uppercase tracking-widest mb-4 border-b border-zinc-200 pb-2">Ερωτηματολογιο Προφιλ</p>
+          <div>
+            <label class="block text-[10px] font-semibold text-zinc-500 uppercase tracking-widest mb-2">Πως σε λενε;</label>
+            <input type="text" placeholder="Ονοματεπώνυμο" class="w-full px-4 py-3 border border-zinc-300 rounded-none focus:ring-1 focus:ring-black focus:border-black outline-none transition bg-zinc-50 font-medium placeholder-zinc-400 text-sm" required />
+          </div>
+          <div>
+            <label class="block text-[10px] font-semibold text-zinc-500 uppercase tracking-widest mb-2">Ποσο καιρο εισαι στο Μεγαρο;</label>
+            <input type="text" placeholder="π.χ. 6 μήνες, 2 χρόνια" class="w-full px-4 py-3 border border-zinc-300 rounded-none focus:ring-1 focus:ring-black focus:border-black outline-none transition bg-zinc-50 font-medium placeholder-zinc-400 text-sm" required />
+          </div>
+          <div>
+            <label class="block text-[10px] font-semibold text-zinc-500 uppercase tracking-widest mb-2">Προτιμαω να δουλευω:</label>
+            <select class="w-full px-4 py-3 border border-zinc-300 rounded-none focus:ring-1 focus:ring-black focus:border-black outline-none transition bg-zinc-50 font-medium text-zinc-700 text-sm" required>
+               <option value="" disabled selected>Επιλέξτε...</option>
+               <option value="morning">Πρωί</option>
+               <option value="afternoon">Μεσημέρι</option>
+               <option value="evening">Βράδυ</option>
+               <option value="any">Δεν με νοιάζει</option>
+            </select>
+          </div>
+          <button type="submit" class="w-full bg-black text-white font-medium py-4 tracking-[0.2em] uppercase text-sm hover:bg-zinc-800 transition mt-2">
+            Ολοκληρωση Εγγραφης
+          </button>
+          <div class="text-center mt-4 pt-2">
+             <button type="button" onclick="showRegisterStep1()" class="text-[10px] text-zinc-500 hover:text-black uppercase tracking-widest font-semibold transition">Πισω</button>
+          </div>
+       </form>
     </div>
   </div>
   <script>
     lucide.createIcons();
     
+    function showRegisterStep1() {
+        document.getElementById('loginContainer').classList.add('hidden');
+        document.getElementById('registerStep2Container').classList.add('hidden');
+        document.getElementById('registerStep1Container').classList.remove('hidden');
+    }
+
+    function showLogin() {
+        document.getElementById('registerStep1Container').classList.add('hidden');
+        document.getElementById('registerStep2Container').classList.add('hidden');
+        document.getElementById('loginContainer').classList.remove('hidden');
+    }
+
+    function handleRegisterStep1(event) {
+        event.preventDefault();
+        document.getElementById('registerStep1Container').classList.add('hidden');
+        document.getElementById('registerStep2Container').classList.remove('hidden');
+    }
+
+    function handleRegisterSubmit(event) {
+        event.preventDefault();
+        alert('Η εγγραφή ολοκληρώθηκε (Mock).');
+        window.location.href = 'usher.html';
+    }
+
     function handleLogin(event) {
       event.preventDefault();
       const email = document.getElementById('email').value.trim().toLowerCase();
