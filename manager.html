@@ -6,6 +6,21 @@
   <title>ΟΜΜΑ - Dashboard Υπευθύνου</title>
   <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 8px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: #f4f4f5; 
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #d4d4d8; 
+        border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #a1a1aa; 
+    }
+  </style>
 </head>
 <body class="bg-zinc-50 min-h-screen font-sans text-zinc-900">
   <header class="bg-black text-white p-4 sticky top-0 z-10 border-b border-zinc-800">
@@ -22,7 +37,7 @@
         <h1 class="text-sm font-medium tracking-[0.15em] uppercase hidden sm:block">Μεγαρο Μουσικης <span class="text-zinc-500 ml-2 border-l border-zinc-700 pl-3">Διαχειριση</span></h1>
       </div>
       <div class="flex items-center space-x-6">
-        <div class="relative cursor-pointer">
+        <div class="relative cursor-pointer" onclick="alert('Έχετε 5 νέες ειδοποιήσεις!')">
           <i data-lucide="bell" class="w-5 h-5 text-zinc-300 hover:text-white transition"></i>
           <span class="absolute -top-1.5 -right-1.5 bg-red-600 text-[10px] text-white rounded-full h-4 w-4 flex items-center justify-center font-bold">5</span>
         </div>
@@ -45,10 +60,20 @@
         <h2 class="text-3xl font-light text-zinc-900 tracking-tight">Έλεγχος Προγράμματος.</h2>
         <p class="text-zinc-500 mt-2 text-sm tracking-wide">Διαχείριση εκκρεμοτήτων και κανόνων (π.χ. 11ωρο).</p>
       </div>
-      <button onclick="openDraftModal()" class="mt-5 sm:mt-0 bg-white border border-zinc-300 hover:bg-zinc-50 text-black px-5 py-2.5 text-sm uppercase tracking-widest font-medium transition flex items-center justify-center space-x-2">
-        <i data-lucide="calendar" class="w-4 h-4"></i>
-        <span>Προβολη Draft</span>
-      </button>
+      <div class="mt-5 sm:mt-0 flex flex-col sm:flex-row gap-3">
+        <button onclick="openCreateScheduleModal()" class="bg-black text-white px-5 py-2.5 text-sm uppercase tracking-widest font-medium transition flex items-center justify-center space-x-2 hover:bg-zinc-800">
+            <i data-lucide="calendar-plus" class="w-4 h-4"></i>
+            <span>Δημιουργια Προγραμματος</span>
+        </button>
+        <button onclick="openCreateDraftModal()" class="bg-white border border-zinc-300 hover:bg-zinc-50 text-black px-5 py-2.5 text-sm uppercase tracking-widest font-medium transition flex items-center justify-center space-x-2">
+            <i data-lucide="plus" class="w-4 h-4"></i>
+            <span>Δημιουργια Draft</span>
+        </button>
+        <button onclick="openDraftModal()" class="bg-white border border-zinc-300 hover:bg-zinc-50 text-black px-5 py-2.5 text-sm uppercase tracking-widest font-medium transition flex items-center justify-center space-x-2">
+            <i data-lucide="calendar" class="w-4 h-4"></i>
+            <span>Προβολη Draft</span>
+        </button>
+      </div>
     </div>
 
     <div class="space-y-5">
@@ -74,39 +99,8 @@
             </div>
           </div>
           <div class="flex space-x-3">
-            <button class="flex-1 bg-black hover:bg-zinc-800 text-white text-[10px] uppercase tracking-widest font-bold py-3 transition">Επικυρωση</button>
-            <button class="flex-1 bg-white border border-zinc-300 hover:bg-zinc-50 text-black text-[10px] uppercase tracking-widest font-bold py-3 transition">Απορριψη</button>
-          </div>
-        </div>
-
-        <div class="bg-white border border-red-200 p-6 relative">
-          <div class="absolute top-0 left-0 w-full h-1 bg-red-600"></div>
-          <div class="flex justify-between items-center mb-6">
-            <span class="text-zinc-400 text-xs tracking-widest font-mono">REQ#A495</span>
-            <span class="bg-red-50 text-red-700 text-[10px] uppercase tracking-widest px-2.5 py-1 font-semibold border border-red-200 flex items-center"><i data-lucide="alert-triangle" class="w-3 h-3 mr-1"></i> Σφαλμα</span>
-          </div>
-          <div class="flex items-center justify-between bg-zinc-50 border border-zinc-100 p-4 mb-5">
-            <div class="text-center w-5/12">
-              <p class="font-medium text-sm text-zinc-900">Μ. Παπά</p>
-              <p class="text-xs text-zinc-500 mt-1 font-mono">18/05 18:00</p>
-            </div>
-             <div class="w-2/12 flex justify-center text-zinc-300">
-               <i data-lucide="arrow-right-left" class="w-4 h-4"></i>
-             </div>
-            <div class="text-center w-5/12">
-              <p class="font-medium text-sm text-zinc-900">Κ. Σταύρου</p>
-              <p class="text-xs text-zinc-500 mt-1 font-mono">20/05 20:00</p>
-            </div>
-          </div>
-          
-          <div class="bg-red-50 border border-red-100 p-3 flex items-start space-x-3 mb-6">
-            <i data-lucide="x" class="w-4 h-4 text-red-600 mt-0.5 shrink-0"></i>
-            <p class="text-xs text-red-800 font-medium leading-relaxed">Αδυναμία έγκρισης: Παραβίαση <strong>11ώρου ανάπαυσης</strong>. Ο ταξιθέτης Κ. Σταύρου εργάζεται στις 19/05 (λήξη 01:00).</p>
-          </div>
-
-          <div class="flex space-x-3">
-            <button disabled class="flex-1 bg-zinc-200 text-zinc-400 text-[10px] uppercase tracking-widest font-bold py-3 cursor-not-allowed">Μπλοκαρισμενο</button>
-            <button class="flex-1 bg-white border border-red-300 hover:bg-red-50 text-red-700 text-[10px] uppercase tracking-widest font-bold py-3 transition">Απορριψη</button>
+            <button onclick="handleManagerAction(this, 'Επικύρωση')" class="flex-1 bg-black hover:bg-zinc-800 text-white text-[10px] uppercase tracking-widest font-bold py-3 transition">Επικυρωση</button>
+            <button onclick="handleManagerAction(this, 'Απόρριψη')" class="flex-1 bg-white border border-zinc-300 hover:bg-zinc-50 text-black text-[10px] uppercase tracking-widest font-bold py-3 transition">Απορριψη</button>
           </div>
         </div>
 
@@ -129,8 +123,8 @@
             </div>
           </div>
           <div class="flex space-x-3">
-            <button class="flex-1 bg-black hover:bg-zinc-800 text-white text-[10px] uppercase tracking-widest font-bold py-3 transition">Επικυρωση</button>
-            <button class="flex-1 bg-white border border-zinc-300 hover:bg-zinc-50 text-black text-[10px] uppercase tracking-widest font-bold py-3 transition">Απορριψη</button>
+            <button onclick="handleManagerAction(this, 'Επικύρωση')" class="flex-1 bg-black hover:bg-zinc-800 text-white text-[10px] uppercase tracking-widest font-bold py-3 transition">Επικυρωση</button>
+            <button onclick="handleManagerAction(this, 'Απόρριψη')" class="flex-1 bg-white border border-zinc-300 hover:bg-zinc-50 text-black text-[10px] uppercase tracking-widest font-bold py-3 transition">Απορριψη</button>
           </div>
         </div>
 
@@ -160,8 +154,8 @@
           </div>
 
           <div class="flex space-x-3">
-            <button class="flex-1 bg-black hover:bg-zinc-800 text-white text-[10px] uppercase tracking-widest font-bold py-3 transition">Εγκριση</button>
-            <button class="flex-1 bg-white border border-orange-300 hover:bg-orange-50 text-orange-700 text-[10px] uppercase tracking-widest font-bold py-3 transition">Απορριψη</button>
+            <button onclick="handleManagerAction(this, 'Έγκριση')" class="flex-1 bg-black hover:bg-zinc-800 text-white text-[10px] uppercase tracking-widest font-bold py-3 transition">Εγκριση</button>
+            <button onclick="handleManagerAction(this, 'Απόρριψη')" class="flex-1 bg-white border border-orange-300 hover:bg-orange-50 text-orange-700 text-[10px] uppercase tracking-widest font-bold py-3 transition">Απορριψη</button>
           </div>
         </div>
       </div>
@@ -196,7 +190,7 @@
               <div class="grid grid-cols-7 gap-px bg-zinc-200">
                 <!-- Day 18 -->
                 <div class="bg-white min-h-[250px] p-2 hover:bg-zinc-50 transition flex flex-col space-y-3">
-                  <div class="bg-blue-50/50 border border-blue-100 p-2 relative group cursor-pointer hover:bg-blue-50 transition shadow-sm">
+                  <div onclick="openShiftDetailsModal('Μπαλέτο (Λίμνη των Κύκνων)', '18 Μαΐου', '19:30', 'Αίθουσα Τριάντη', true)" class="bg-blue-50/50 border border-blue-100 p-2 relative group cursor-pointer hover:bg-blue-50 transition shadow-sm">
                     <span class="absolute top-2 right-2 bg-blue-100 text-blue-700 text-[9px] uppercase font-bold px-1.5 py-0.5">Draft</span>
                     <p class="text-[10px] sm:text-xs font-bold text-black mb-1">19:30</p>
                     <p class="text-xs font-medium text-zinc-900 leading-tight mb-1">Μπαλέτο (Λίμνη των Κύκνων)</p>
@@ -217,7 +211,7 @@
                 
                 <!-- Day 20 -->
                 <div class="bg-white min-h-[250px] p-2 hover:bg-zinc-50 transition flex flex-col space-y-3">
-                  <div class="bg-blue-50/50 border border-blue-100 p-2 relative group cursor-pointer hover:bg-blue-50 transition shadow-sm">
+                  <div onclick="openShiftDetailsModal('Συναυλία ΚΟΑ', '20 Μαΐου', '20:00', 'Αίθ. Χ. Λαμπράκης', true)" class="bg-blue-50/50 border border-blue-100 p-2 relative group cursor-pointer hover:bg-blue-50 transition shadow-sm">
                     <span class="absolute top-2 right-2 bg-blue-100 text-blue-700 text-[9px] uppercase font-bold px-1.5 py-0.5">Draft</span>
                     <p class="text-[10px] sm:text-xs font-bold text-black mb-1">20:00</p>
                     <p class="text-xs font-medium text-zinc-900 leading-tight mb-1">Συναυλία ΚΟΑ</p>
@@ -239,7 +233,7 @@
                 
                 <!-- Day 22 -->
                 <div class="bg-orange-50/20 min-h-[250px] p-2 hover:bg-orange-50/50 transition flex flex-col space-y-3">
-                  <div class="bg-orange-50 border border-orange-200 p-2 relative group cursor-pointer hover:bg-orange-100/50 transition shadow-sm">
+                  <div onclick="openShiftDetailsModal('Όπερα (Κάρμεν)', '22 Μαΐου', '20:00', 'Αίθουσα Τριάντη', true)" class="bg-orange-50 border border-orange-200 p-2 relative group cursor-pointer hover:bg-orange-100/50 transition shadow-sm">
                     <span class="absolute top-2 right-2 flex text-orange-600">
                       <i data-lucide="alert-circle" class="w-3 h-3"></i>
                     </span>
@@ -257,7 +251,7 @@
                 
                 <!-- Day 23 -->
                 <div class="bg-white min-h-[250px] p-2 hover:bg-zinc-50 transition flex flex-col space-y-3">
-                  <div class="bg-blue-50/50 border border-blue-100 p-2 relative group cursor-pointer hover:bg-blue-50 transition shadow-sm">
+                  <div onclick="openShiftDetailsModal('Εκπαιδευτικό Πρόγραμμα', '23 Μαΐου', '11:00', 'Αίθουσα Σκαλκώτα', true)" class="bg-blue-50/50 border border-blue-100 p-2 relative group cursor-pointer hover:bg-blue-50 transition shadow-sm">
                     <span class="absolute top-2 right-2 bg-blue-100 text-blue-700 text-[9px] uppercase font-bold px-1.5 py-0.5">Draft</span>
                     <p class="text-[10px] sm:text-xs font-bold text-black mb-1">11:00</p>
                     <p class="text-xs font-medium text-zinc-900 leading-tight mb-1">Εκπαιδευτικό Πρόγραμμα</p>
@@ -284,8 +278,635 @@
           <div class="text-xs text-zinc-500 font-medium">Σύνολο: 14 βάρδιες, 82 ταξιθέτες</div>
           <div class="flex space-x-4 w-full sm:w-auto">
             <button onclick="closeDraftModal()" class="flex-1 sm:flex-none bg-white border border-zinc-300 text-black px-6 py-3 text-[10px] sm:text-xs uppercase tracking-widest font-bold hover:bg-zinc-50 transition">Κλεισιμο</button>
-            <button onclick="publishDraft()" class="flex-1 sm:flex-none bg-black text-white px-6 py-3 text-[10px] sm:text-xs uppercase tracking-widest font-bold hover:bg-zinc-800 transition">Οριστικοποιηση</button>
           </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shift Details Modal -->
+  <div id="shiftDetailsModal" class="fixed inset-0 z-[60] bg-black/60 hidden flex items-center justify-center p-4 lg:p-8 backdrop-blur-sm transition-opacity opacity-0">
+    <div class="bg-zinc-50 w-full max-w-7xl shadow-2xl flex flex-col max-h-full overflow-hidden transform scale-95 transition-transform duration-200 rounded-xl" id="shiftDetailsContent">
+      <div class="bg-white border-b border-zinc-200 p-6 flex justify-between items-start shrink-0">
+        <div>
+          <div class="flex items-center space-x-3 mb-1">
+             <span id="planoStatusBadge" class="bg-blue-100 text-blue-700 text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-full">Οριστικοποιημενο</span>
+             <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-zinc-900 uppercase" id="planoEvent">ΜΠΑΛΕΤΟ (ΛΙΜΝΗ ΤΩΝ ΚΥΚΝΩΝ)</h2>
+          </div>
+          <div class="flex flex-wrap items-center gap-4 mt-3 text-sm text-zinc-600 font-medium uppercase tracking-wide">
+             <span class="flex items-center"><i data-lucide="calendar" class="w-4 h-4 mr-1.5 opacity-70"></i> <span id="planoDate">18 ΜΑΪΟΥ 2026</span></span>
+             <span class="flex items-center"><i data-lucide="clock" class="w-4 h-4 mr-1.5 opacity-70"></i> 18:30 - 23:00</span>
+             <span class="flex items-center"><i data-lucide="map-pin" class="w-4 h-4 mr-1.5 opacity-70"></i> <span id="planoSpace">ΑΙΘΟΥΣΑ ΑΛΕΞΑΝΔΡΑ ΤΡΙΑΝΤΗ</span></span>
+          </div>
+        </div>
+        <button onclick="closeShiftDetailsModal()" class="text-zinc-400 hover:text-zinc-800 transition bg-zinc-100 hover:bg-zinc-200 p-2 rounded-full"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      
+      <div class="p-6 sm:p-8 overflow-y-auto flex-1 custom-scrollbar">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <!-- ΓΕΝΙΚΑ -->
+            <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden shadow-sm flex flex-col">
+               <div class="bg-zinc-50 border-b border-zinc-200 p-4 shrink-0">
+                  <h3 class="text-xs font-bold text-zinc-800 tracking-widest uppercase flex items-center justify-between">
+                     Γενικοι Χωροι
+                     <span class="bg-white border border-zinc-200 text-zinc-500 rounded-full w-5 h-5 flex items-center justify-center text-[10px]">6</span>
+                  </h3>
+               </div>
+               <div class="divide-y divide-zinc-50 flex-1">
+                  <div class="p-4 hover:bg-zinc-50/50 transition">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-1">Νεα Εισοδος (Βασ. Σοφιας)</p>
+                     <p class="text-sm font-semibold text-zinc-900">ΔΙΑΚΟΥΜΗ, ΣΚΟΝΔΡΗ</p>
+                  </div>
+                  <div class="p-4 hover:bg-zinc-50/50 transition">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-1">Ελεγχος Εισιτηριων</p>
+                     <p class="text-sm font-semibold text-zinc-900">ΜΑΝΩΛΟΥ, ΧΟΝΤΟΥ</p>
+                  </div>
+                  <div class="p-4 hover:bg-zinc-50/50 transition">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-1">Βεστιαριο</p>
+                     <p class="text-sm font-semibold text-zinc-900">ΟΙΚΟΝΟΜΟΥ</p>
+                  </div>
+                  <div class="p-4 hover:bg-zinc-50/50 transition">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-1">Πωληση Προγραμ.</p>
+                     <p class="text-sm font-semibold text-zinc-900">ΠΑΠΑΦΡΑΓΚΟΥ</p>
+                  </div>
+                  <div class="p-4 hover:bg-zinc-50/50 transition">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-1">Info Desk</p>
+                     <p class="text-sm font-semibold text-zinc-400">-</p>
+                  </div>
+                  <div class="p-4 hover:bg-zinc-50/50 transition">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-1">Κατευθυνση (Πισω απο γυαλι)</p>
+                     <p class="text-sm font-semibold text-zinc-900">ΡΗΓΑΣ</p>
+                  </div>
+               </div>
+            </div>
+
+            <!-- ΘΕΩΡΕΙΑ Α -->
+            <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden shadow-sm flex flex-col">
+               <div class="bg-zinc-50 border-b border-zinc-200 p-4 shrink-0">
+                  <h3 class="text-xs font-bold text-zinc-800 tracking-widest uppercase flex items-center justify-between">
+                     Θεωρεια Α
+                     <span class="bg-white border border-zinc-200 text-zinc-500 rounded-full w-5 h-5 flex items-center justify-center text-[10px]">7</span>
+                  </h3>
+               </div>
+               <div class="divide-y divide-zinc-50 flex-1">
+                  <div class="p-4 hover:bg-zinc-50/50 transition">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-1">Εισοδος 1</p>
+                     <p class="text-sm font-semibold text-zinc-900">ΠΑΠΑΓΕΩΡΓΙΟΥ</p>
+                  </div>
+                  <div class="p-4 hover:bg-zinc-50/50 transition">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-1">Εισοδος 2</p>
+                     <p class="text-sm font-semibold text-zinc-900">ΚΑΛΟΥΡΗ ΑΝ.</p>
+                  </div>
+                  <div class="p-4 hover:bg-zinc-50/50 transition">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-1">Εισοδος 3</p>
+                     <p class="text-sm font-semibold text-zinc-900">ΣΠΥΡΑΚΟΥ</p>
+                  </div>
+                  <div class="p-4 hover:bg-zinc-50/50 transition">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-1">Εισοδος 4</p>
+                     <p class="text-sm font-semibold text-zinc-900">ΣΑΒΒΑ</p>
+                  </div>
+                  <div class="p-4 hover:bg-zinc-50/50 transition">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-1">Ακουστικα (Τραπεζι 1)</p>
+                     <p class="text-sm font-semibold text-zinc-400">-</p>
+                  </div>
+                  <div class="p-4 hover:bg-zinc-50/50 transition">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-1">Εισ. & Ταξ. Εισοδος 5</p>
+                     <p class="text-sm font-semibold text-zinc-900">ΜΠΟΥΛΟΪ, ΚΡΙΚΟΝΗ I</p>
+                  </div>
+                  <div class="p-4 hover:bg-zinc-50/50 transition">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-1">Εισ. & Ταξ. Εισοδος 6</p>
+                     <p class="text-sm font-semibold text-zinc-900">ΓΕΡΟΚΩΣΤΑ</p>
+                  </div>
+                  <div class="p-4 hover:bg-zinc-50/50 transition">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-1">Εισ. & Ταξ. Εισοδος 7</p>
+                     <p class="text-sm font-semibold text-zinc-900">ΤΣΙΡΟΥ</p>
+                  </div>
+                  <div class="p-4 hover:bg-zinc-50/50 transition">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-1">Εισ. & Ταξ. Εισοδος 8</p>
+                     <p class="text-sm font-semibold text-zinc-400">-</p>
+                  </div>
+               </div>
+            </div>
+
+            <!-- ΠΛΑΤΕΙΑ ΑΑΤ -->
+            <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden shadow-sm flex flex-col">
+               <div class="bg-zinc-50 border-b border-zinc-200 p-4 shrink-0">
+                  <h3 class="text-xs font-bold text-zinc-800 tracking-widest uppercase flex items-center justify-between">
+                     Πλατεια ΑΑΤ
+                     <span class="bg-white border border-zinc-200 text-zinc-500 rounded-full w-5 h-5 flex items-center justify-center text-[10px]">7</span>
+                  </h3>
+               </div>
+               <div class="divide-y divide-zinc-50 flex-1">
+                  <div class="p-4 hover:bg-zinc-50/50 transition">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-1">Σκηνη</p>
+                     <p class="text-sm font-semibold text-zinc-900">ΜΑΚΡΙΔΗ</p>
+                  </div>
+                  <div class="p-4 hover:bg-zinc-50/50 transition">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-1">Ανω Διαδρομος</p>
+                     <p class="text-sm font-semibold text-zinc-900">ΔΑΡΔΑΝΗ</p>
+                  </div>
+                  <div class="p-4 hover:bg-zinc-50/50 transition">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-1">Εισοδος ΑΜΕΑ</p>
+                     <p class="text-sm font-semibold text-zinc-900">ΚΕΧΑΓΙΟΓΛΟΥ Γ.</p>
+                  </div>
+                  <div class="p-4 hover:bg-zinc-50/50 transition">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-1">Ακουστικα (Τραπεζια)</p>
+                     <p class="text-sm font-semibold text-zinc-900">ΚΑΣΤΑΜΗ, ΖΑΦΡΑ</p>
+                  </div>
+                  <div class="p-4 hover:bg-zinc-50/50 transition">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-1">Πωλητηριο</p>
+                     <p class="text-sm font-semibold text-zinc-900">ΔΩΡΕΑΝ ΕΝΤΥΠΟ</p>
+                  </div>
+                  <div class="p-4 hover:bg-zinc-50/50 transition">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-1">Parking</p>
+                     <p class="text-sm font-semibold text-zinc-900">ΧΟΥΤΑ, ΚΑΡΙΠΙΔΗ</p>
+                  </div>
+                  <div class="p-4 hover:bg-zinc-50/50 transition">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-1">Διαφορα</p>
+                     <p class="text-sm font-semibold text-zinc-900">ΜΠΙΚΟΥ, ΚΕΧΑΓΙΟΓΛΟΥ ΣΠ.</p>
+                  </div>
+               </div>
+            </div>
+
+            <!-- ΘΕΩΡΕΙΑ Β -->
+            <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden shadow-sm flex flex-col">
+               <div class="bg-zinc-50 border-b border-zinc-200 p-4 shrink-0">
+                  <h3 class="text-xs font-bold text-zinc-800 tracking-widest uppercase flex items-center justify-between">
+                     Θεωρεια Β
+                     <span class="bg-white border border-zinc-200 text-zinc-500 rounded-full w-5 h-5 flex items-center justify-center text-[10px]">9</span>
+                  </h3>
+               </div>
+               <div class="divide-y divide-zinc-50 flex-1">
+                  <div class="p-4 hover:bg-zinc-50/50 transition">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-1">Ασανσερ (bar Πλατειας)</p>
+                     <p class="text-sm font-semibold text-zinc-900">ΤΙΛΗ</p>
+                  </div>
+                  <div class="p-4 hover:bg-zinc-50/50 transition">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-1">Ασαν. Shop 2</p>
+                     <p class="text-sm font-semibold text-zinc-900">ΧΟΥΔΚΙΑΔΗ</p>
+                  </div>
+                  <div class="p-4 hover:bg-zinc-50/50 transition">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-1">Ασαν. Κυλιομ.</p>
+                     <p class="text-sm font-semibold text-zinc-900">ΜΑΚΡΟΓΙΑΝΝΗ</p>
+                  </div>
+                  <div class="p-4 hover:bg-zinc-50/50 transition">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-1">Ακουσ. (Διανομη)</p>
+                     <p class="text-sm font-semibold text-zinc-900">ΠΑΠΑΝΔΡΕΟΥ (+ΑΣΑΝ)</p>
+                  </div>
+                  <div class="p-4 hover:bg-zinc-50/50 transition">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-1">Εισ. & Ταξ. Εισ. 9</p>
+                     <p class="text-sm font-semibold text-zinc-900">ΙΣΑΡΗ, ΚΟΥΤΑΡΙΔΗ</p>
+                  </div>
+                  <div class="p-4 hover:bg-zinc-50/50 transition">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-1">Εισ. & Ταξ. Εισ. 10</p>
+                     <p class="text-sm font-semibold text-zinc-900">ΚΕΣΚΙΛΟΥ, ΚΡΟΚΟΥ</p>
+                  </div>
+                  <div class="p-4 hover:bg-zinc-50/50 transition">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-1">Εισ. & Ταξ. Εισ. 11</p>
+                     <p class="text-sm font-semibold text-zinc-900">ΤΕΛΛΑΚΗ, ΜΠΙΝΙΑΡΗ</p>
+                  </div>
+                  <div class="p-4 hover:bg-zinc-50/50 transition">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-1">Εισ. & Ταξ. Εισ. 12</p>
+                     <p class="text-sm font-semibold text-zinc-900">ΨΕΒΕΔΟΥΡΟΥ, ΛΑΖΑΡΙΔΟΥ</p>
+                  </div>
+                  <div class="p-4 hover:bg-zinc-50/50 transition">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-1">Προσθετοι</p>
+                     <p class="text-sm font-semibold text-zinc-900">ΠΟΛΥΧΡΟΝΗ</p>
+                  </div>
+               </div>
+            </div>
+            
+          </div>
+
+          <!-- Extra section -->
+          <div class="mt-6 bg-white border border-zinc-200 rounded-xl p-5 shadow-sm flex flex-col md:flex-row md:items-center space-y-3 md:space-y-0 md:space-x-6">
+             <div class="flex items-center space-x-2 text-zinc-800 shrink-0">
+                <i data-lucide="users" class="w-5 h-5 text-zinc-400"></i>
+                <span class="text-xs font-bold uppercase tracking-widest">Συνοδεια ΑΜΕΑ</span>
+             </div>
+             <p class="text-sm font-semibold text-zinc-900 flex-1">
+                ΖΑΧΑΡΙΟΥ, ΚΟΚΟΝΙΔΗΣ, ΤΣΙΟΡΤΟΣ
+                <span class="text-zinc-500 ml-2 font-normal">(28:00 - 23:00)</span>
+             </p>
+          </div>
+      </div>
+      <div id="shiftDetailsFooter" class="p-4 sm:p-6 border-t border-zinc-200 bg-white flex justify-end shrink-0 hidden space-x-3">
+          <button onclick="closeShiftDetailsModal()" class="px-6 py-2 border-2 border-zinc-300 text-zinc-600 font-bold text-xs uppercase tracking-widest hover:border-black hover:text-black transition flex-1 sm:flex-none text-center">Ακυρωση</button>
+          <button onclick="finalizePerformance()" class="px-6 py-2 bg-black border-2 border-black text-white font-bold text-xs uppercase tracking-widest hover:bg-zinc-800 transition flex-1 sm:flex-none text-center">Αποστολη στον Προισταμενο</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create Schedule Modal -->
+  <div id="createScheduleModal" class="fixed inset-0 z-[60] bg-black/60 hidden flex items-center justify-center p-4 lg:p-8 backdrop-blur-sm transition-opacity opacity-0">
+    <div class="bg-zinc-50 w-full max-w-5xl shadow-2xl flex flex-col max-h-full overflow-hidden transform scale-95 transition-transform duration-200 rounded-xl" id="createScheduleContent">
+      <div class="bg-white border-b border-zinc-200 p-6 flex justify-between items-start shrink-0">
+        <div>
+          <div class="flex items-center space-x-3 mb-1">
+             <span class="bg-blue-100 text-blue-700 text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-full">Προγραμμα Εβδομαδας</span>
+             <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-zinc-900 uppercase">Αναθεση Βαρδιων (Υπαλληλοι ανα Μερα)</h2>
+          </div>
+          <div class="mt-2 text-sm text-zinc-600 font-medium">Επιλέξτε μια μέρα για να αναθέσετε το προσωπικό ταξιθεσίας που θα εργαστεί.</div>
+        </div>
+        <button onclick="closeCreateScheduleModal()" class="text-zinc-400 hover:text-zinc-800 transition bg-zinc-100 hover:bg-zinc-200 p-2 rounded-full"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      
+      <div class="p-6 sm:p-8 overflow-y-auto flex-1 custom-scrollbar">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <!-- Day 1 -->
+            <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden shadow-sm flex flex-col h-full">
+               <div class="bg-zinc-50 border-b border-zinc-200 p-4 shrink-0 flex justify-between items-center">
+                  <h3 class="text-sm font-bold text-zinc-800 uppercase tracking-widest">Δευτερα</h3>
+                  <span class="text-xs text-zinc-500 font-medium">18 Μαΐου 2026</span>
+               </div>
+               <div class="p-4 flex-1 flex flex-col space-y-4">
+                  <div class="border border-zinc-200 rounded p-3 bg-zinc-50/50">
+                     <div class="font-semibold text-sm mb-1 text-black">Μπαλέτο (Λίμνη των Κύκνων)</div>
+                     <div class="text-[10px] text-zinc-500 uppercase tracking-widest mb-3">19:30 | Αίθουσα Τριάντη</div>
+                     
+                     <div class="min-h-[40px] flex items-center content-start flex-wrap gap-2 mb-3" id="schedule-day-1-perf-1">
+                        <span class="text-xs text-zinc-400 italic">Κανένας ταξιθέτης...</span>
+                     </div>
+                     <button onclick="openSelectUsherModal('18 Μαΐου - Μπαλέτο')" class="w-full py-1.5 border border-dashed border-zinc-300 bg-white rounded text-[10px] font-bold text-zinc-600 uppercase tracking-widest hover:border-black hover:text-black transition flex items-center justify-center gap-1">
+                         <i data-lucide="plus" class="w-3 h-3"></i> Ταξιθετες
+                     </button>
+                  </div>
+               </div>
+            </div>
+
+            <!-- Day 2 -->
+            <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden shadow-sm flex flex-col h-full">
+               <div class="bg-zinc-50 border-b border-zinc-200 p-4 shrink-0 flex justify-between items-center">
+                  <h3 class="text-sm font-bold text-zinc-800 uppercase tracking-widest">Τριτη</h3>
+                  <span class="text-xs text-zinc-500 font-medium">19 Μαΐου 2026</span>
+               </div>
+               <div class="p-4 flex-1 flex flex-col items-center justify-center text-center">
+                  <p class="text-xs text-zinc-400 italic mb-2">Δεν υπάρχουν παραστάσεις.</p>
+                  <button class="px-3 py-1.5 border border-dashed border-zinc-300 rounded text-[10px] font-bold text-zinc-400 tracking-widest uppercase cursor-not-allowed">
+                     Ρεπο / Κενο
+                  </button>
+               </div>
+            </div>
+
+            <!-- Day 3 -->
+            <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden shadow-sm flex flex-col h-full">
+               <div class="bg-zinc-50 border-b border-zinc-200 p-4 shrink-0 flex justify-between items-center">
+                  <h3 class="text-sm font-bold text-zinc-800 uppercase tracking-widest">Τεταρτη</h3>
+                  <span class="text-xs text-zinc-500 font-medium">20 Μαΐου 2026</span>
+               </div>
+               <div class="p-4 flex-1 flex flex-col space-y-4">
+                  <div class="border border-zinc-200 rounded p-3 bg-zinc-50/50">
+                     <div class="font-semibold text-sm mb-1 text-black">Συναυλία ΚΟΑ</div>
+                     <div class="text-[10px] text-zinc-500 uppercase tracking-widest mb-3">20:00 | Αίθ. Χ. Λαμπράκης</div>
+                     
+                     <div class="min-h-[40px] flex items-center content-start flex-wrap gap-2 mb-3" id="schedule-day-3-perf-1">
+                        <span class="text-xs text-zinc-400 italic">Κανένας ταξιθέτης...</span>
+                     </div>
+                     <button onclick="openSelectUsherModal('20 Μαΐου - Συναυλία')" class="w-full py-1.5 border border-dashed border-zinc-300 bg-white rounded text-[10px] font-bold text-zinc-600 uppercase tracking-widest hover:border-black hover:text-black transition flex items-center justify-center gap-1">
+                         <i data-lucide="plus" class="w-3 h-3"></i> Ταξιθετες
+                     </button>
+                  </div>
+               </div>
+            </div>
+
+            <!-- Day 4 -->
+            <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden shadow-sm flex flex-col h-full">
+               <div class="bg-zinc-50 border-b border-zinc-200 p-4 shrink-0 flex justify-between items-center">
+                  <h3 class="text-sm font-bold text-zinc-800 uppercase tracking-widest">Πεμπτη</h3>
+                  <span class="text-xs text-zinc-500 font-medium">21 Μαΐου 2026</span>
+               </div>
+               <div class="p-4 flex-1 flex flex-col items-center justify-center text-center">
+                  <p class="text-xs text-zinc-400 italic mb-2">Δεν υπάρχουν παραστάσεις.</p>
+                  <button class="px-3 py-1.5 border border-dashed border-zinc-300 rounded text-[10px] font-bold text-zinc-400 tracking-widest uppercase cursor-not-allowed">
+                     Ρεπο / Κενο
+                  </button>
+               </div>
+            </div>
+
+            <!-- Day 5 -->
+            <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden shadow-sm flex flex-col h-full">
+               <div class="bg-zinc-50 border-b border-zinc-200 p-4 shrink-0 flex justify-between items-center">
+                  <h3 class="text-sm font-bold text-zinc-800 uppercase tracking-widest">Παρασκευη</h3>
+                  <span class="text-xs text-zinc-500 font-medium">22 Μαΐου 2026</span>
+               </div>
+               <div class="p-4 flex-1 flex flex-col space-y-4">
+                  <div class="border border-zinc-200 rounded p-3 bg-zinc-50/50">
+                     <div class="font-semibold text-sm mb-1 text-black">Όπερα (Κάρμεν)</div>
+                     <div class="text-[10px] text-zinc-500 uppercase tracking-widest mb-3">20:00 | Αίθουσα Τριάντη</div>
+                     
+                     <div class="min-h-[40px] flex items-center content-start flex-wrap gap-2 mb-3" id="schedule-day-5-perf-1">
+                        <span class="text-xs text-zinc-400 italic">Κανένας ταξιθέτης...</span>
+                     </div>
+                     <button onclick="openSelectUsherModal('22 Μαΐου - Όπερα')" class="w-full py-1.5 border border-dashed border-zinc-300 bg-white rounded text-[10px] font-bold text-zinc-600 uppercase tracking-widest hover:border-black hover:text-black transition flex items-center justify-center gap-1">
+                         <i data-lucide="plus" class="w-3 h-3"></i> Ταξιθετες
+                     </button>
+                  </div>
+               </div>
+            </div>
+
+            <!-- Day 6 -->
+            <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden shadow-sm flex flex-col h-full">
+               <div class="bg-zinc-50 border-b border-zinc-200 p-4 shrink-0 flex justify-between items-center text-orange-800">
+                  <h3 class="text-sm font-bold uppercase tracking-widest">Σαββατο</h3>
+                  <span class="text-xs font-medium">23 Μαΐου 2026</span>
+               </div>
+               <div class="p-4 flex-1 flex flex-col space-y-4">
+                  <div class="border border-zinc-200 rounded p-3 bg-zinc-50/50">
+                     <div class="font-semibold text-sm mb-1 text-black">Θεατρική Παράσταση</div>
+                     <div class="text-[10px] text-zinc-500 uppercase tracking-widest mb-3">20:30 | Yποσκήνιο Β</div>
+                     
+                     <div class="min-h-[40px] flex items-center content-start flex-wrap gap-2 mb-3" id="schedule-day-6-perf-1">
+                        <span class="text-xs text-zinc-400 italic">Κανένας ταξιθέτης...</span>
+                     </div>
+                     <button onclick="openSelectUsherModal('23 Μαΐου - Θέατρο')" class="w-full py-1.5 border border-dashed border-zinc-300 bg-white rounded text-[10px] font-bold text-zinc-600 uppercase tracking-widest hover:border-black hover:text-black transition flex items-center justify-center gap-1">
+                         <i data-lucide="plus" class="w-3 h-3"></i> Ταξιθετες
+                     </button>
+                  </div>
+                  <div class="border border-zinc-200 rounded p-3 bg-zinc-50/50">
+                     <div class="font-semibold text-sm mb-1 text-black">Late Night Jazz</div>
+                     <div class="text-[10px] text-zinc-500 uppercase tracking-widest mb-3">23:00 | B Flat</div>
+                     
+                     <div class="min-h-[40px] flex items-center content-start flex-wrap gap-2 mb-3" id="schedule-day-6-perf-2">
+                        <span class="text-xs text-zinc-400 italic">Κανένας ταξιθέτης...</span>
+                     </div>
+                     <button onclick="openSelectUsherModal('23 Μαΐου - Jazz')" class="w-full py-1.5 border border-dashed border-zinc-300 bg-white rounded text-[10px] font-bold text-zinc-600 uppercase tracking-widest hover:border-black hover:text-black transition flex items-center justify-center gap-1">
+                         <i data-lucide="plus" class="w-3 h-3"></i> Ταξιθετες
+                     </button>
+                  </div>
+               </div>
+            </div>
+
+            <!-- Day 7 -->
+            <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden shadow-sm flex flex-col h-full">
+               <div class="bg-zinc-50 border-b border-zinc-200 p-4 shrink-0 flex justify-between items-center text-red-800">
+                  <h3 class="text-sm font-bold uppercase tracking-widest">Κυριακη</h3>
+                  <span class="text-xs font-medium">24 Μαΐου 2026</span>
+               </div>
+               <div class="p-4 flex-1 flex flex-col space-y-4">
+                  <div class="border border-zinc-200 rounded p-3 bg-zinc-50/50">
+                     <div class="font-semibold text-sm mb-1 text-black">Παιδικό Θέατρο</div>
+                     <div class="text-[10px] text-zinc-500 uppercase tracking-widest mb-3">12:00 | Αίθουσα Τριάντη</div>
+                     
+                     <div class="min-h-[40px] flex items-center content-start flex-wrap gap-2 mb-3" id="schedule-day-7-perf-1">
+                        <span class="text-xs text-zinc-400 italic">Κανένας ταξιθέτης...</span>
+                     </div>
+                     <button onclick="openSelectUsherModal('24 Μαΐου - Παιδικό')" class="w-full py-1.5 border border-dashed border-zinc-300 bg-white rounded text-[10px] font-bold text-zinc-600 uppercase tracking-widest hover:border-black hover:text-black transition flex items-center justify-center gap-1">
+                         <i data-lucide="plus" class="w-3 h-3"></i> Ταξιθετες
+                     </button>
+                  </div>
+               </div>
+            </div>
+            
+          </div>
+      </div>
+      <div class="p-6 border-t border-zinc-200 bg-white flex justify-end shrink-0">
+          <button onclick="closeCreateScheduleModal()" class="px-6 py-2 border-2 border-black text-black font-bold text-xs uppercase tracking-widest hover:bg-zinc-100 transition">Αποθηκευση Προγραμματος</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create Draft Modal -->
+  <div id="createDraftModal" class="fixed inset-0 z-[60] bg-black/60 hidden flex items-center justify-center p-4 backdrop-blur-sm transition-opacity opacity-0">
+    <div class="bg-white w-full max-w-5xl shadow-2xl flex flex-col max-h-[90vh] transform scale-95 transition-transform duration-200" id="createDraftContent">
+      <div class="p-6 border-b border-zinc-100 flex justify-between items-center bg-zinc-50 shrink-0">
+        <div>
+          <h2 class="text-lg font-bold tracking-tight text-black uppercase">Δημιουργια Draft - Επιλογη Παραστασης</h2>
+          <p class="text-xs font-medium text-zinc-500 mt-1 uppercase tracking-widest">Εβδομαδα 18-24 Μαιου 2026</p>
+        </div>
+        <button onclick="closeCreateDraftModal()" class="text-zinc-400 hover:text-black transition"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      <div class="p-6 overflow-y-auto flex-1 bg-zinc-50 custom-scrollbar">
+        <div class="bg-white border border-zinc-200 overflow-hidden shadow-sm">
+          <div class="overflow-x-auto">
+            <div class="min-w-[800px]">
+              <div class="grid grid-cols-7 bg-zinc-50 border-b border-zinc-200 text-center text-[10px] sm:text-xs font-semibold text-zinc-500 uppercase tracking-widest py-3">
+                <div>Δευτέρα (18)</div>
+                <div>Τρίτη (19)</div>
+                <div>Τετάρτη (20)</div>
+                <div>Πέμπτη (21)</div>
+                <div>Παρασκευή (22)</div>
+                <div>Σάββατο (23)</div>
+                <div>Κυριακή (24)</div>
+              </div>
+              
+              <div class="grid grid-cols-7 gap-px bg-zinc-200">
+                <!-- Day 18 -->
+                <div class="bg-white min-h-[250px] p-2 hover:bg-zinc-50 transition flex flex-col space-y-3">
+                  <div onclick="openAssignPostsModal('Μπαλέτο (Λίμνη των Κύκνων)', '18 Μαΐου', '19:30', 'Αίθουσα Τριάντη')" class="bg-blue-50/50 border border-blue-100 p-2 relative group cursor-pointer hover:bg-blue-50 transition shadow-sm">
+                    <p class="text-[10px] sm:text-xs font-bold text-black mb-1">19:30</p>
+                    <p class="text-xs font-medium text-zinc-900 leading-tight mb-1 group-hover:underline">Μπαλέτο (Λίμνη των Κύκνων)</p>
+                    <p class="text-[9px] text-zinc-500 flex items-center mb-3"><i data-lucide="map-pin" class="w-3 h-3 mr-1"></i> Αίθουσα Τριάντη</p>
+                  </div>
+                </div>
+                
+                <!-- Day 19 -->
+                <div class="bg-white min-h-[250px] p-2 hover:bg-zinc-50 transition flex flex-col items-center justify-start pt-6">
+                  <p class="text-zinc-300 text-[10px] font-medium uppercase tracking-widest text-center leading-relaxed">Καμια<br/>Εκδηλωση</p>
+                </div>
+                
+                <!-- Day 20 -->
+                <div class="bg-white min-h-[250px] p-2 hover:bg-zinc-50 transition flex flex-col space-y-3">
+                  <div onclick="openAssignPostsModal('Συναυλία ΚΟΑ', '20 Μαΐου', '20:00', 'Αίθ. Χ. Λαμπράκης')" class="bg-blue-50/50 border border-blue-100 p-2 relative group cursor-pointer hover:bg-blue-50 transition shadow-sm">
+                    <p class="text-[10px] sm:text-xs font-bold text-black mb-1">20:00</p>
+                    <p class="text-xs font-medium text-zinc-900 leading-tight mb-1 group-hover:underline">Συναυλία ΚΟΑ</p>
+                    <p class="text-[9px] text-zinc-500 flex items-center mb-3"><i data-lucide="map-pin" class="w-3 h-3 mr-1"></i> Αίθ. Χ. Λαμπράκης</p>
+                  </div>
+                </div>
+                
+                <!-- Day 21 -->
+                <div class="bg-white min-h-[250px] p-2 hover:bg-zinc-50 transition flex flex-col items-center justify-start pt-6">
+                  <p class="text-zinc-300 text-[10px] font-medium uppercase tracking-widest text-center leading-relaxed">Καμια<br/>Εκδηλωση</p>
+                </div>
+                
+                <!-- Day 22 -->
+                <div class="bg-white min-h-[250px] p-2 hover:bg-zinc-50 transition flex flex-col space-y-3">
+                  <div onclick="openAssignPostsModal('Όπερα (Κάρμεν)', '22 Μαΐου', '20:00', 'Αίθουσα Τριάντη')" class="bg-blue-50/50 border border-blue-100 p-2 relative group cursor-pointer hover:bg-blue-50 transition shadow-sm">
+                    <p class="text-[10px] sm:text-xs font-bold text-black mb-1">20:00</p>
+                    <p class="text-xs font-medium text-zinc-900 leading-tight mb-1 group-hover:underline">Όπερα (Κάρμεν)</p>
+                    <p class="text-[9px] text-zinc-500 flex items-center mb-3"><i data-lucide="map-pin" class="w-3 h-3 mr-1"></i> Αίθουσα Τριάντη</p>
+                  </div>
+                </div>
+                
+                <!-- Day 23 -->
+                <div class="bg-white min-h-[250px] p-2 hover:bg-zinc-50 transition flex flex-col space-y-3">
+                  <div onclick="openAssignPostsModal('Εκπαιδευτικό Πρόγραμμα', '23 Μαΐου', '11:00', 'Αίθουσα Σκαλκώτα')" class="bg-blue-50/50 border border-blue-100 p-2 relative group cursor-pointer hover:bg-blue-50 transition shadow-sm">
+                    <p class="text-[10px] sm:text-xs font-bold text-black mb-1">11:00</p>
+                    <p class="text-xs font-medium text-zinc-900 leading-tight mb-1 group-hover:underline">Εκπαιδευτικό</p>
+                    <p class="text-[9px] text-zinc-500 flex items-center mb-3"><i data-lucide="map-pin" class="w-3 h-3 mr-1"></i> Αίθουσα Σκαλκώτα</p>
+                  </div>
+                </div>
+                
+                <!-- Day 24 -->
+                <div class="bg-white min-h-[250px] p-2 hover:bg-zinc-50 transition flex flex-col items-center justify-start pt-6">
+                  <p class="text-zinc-300 text-[10px] font-medium uppercase tracking-widest text-center leading-relaxed">Καμια<br/>Εκδηλωση</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Assign Posts Modal -->
+  <div id="assignPostsModal" class="fixed inset-0 z-[70] bg-black/60 hidden flex items-center justify-center p-4 lg:p-8 backdrop-blur-sm transition-opacity opacity-0">
+    <div class="bg-zinc-50 w-full max-w-7xl shadow-2xl flex flex-col max-h-full overflow-hidden transform scale-95 transition-transform duration-200 rounded-xl" id="assignPostsContent">
+      <div class="bg-white border-b border-zinc-200 p-6 flex justify-between items-start shrink-0">
+        <div class="flex items-center">
+          <button onclick="closeAssignPostsModal()" class="mr-4 text-zinc-400 hover:text-black mt-1 bg-zinc-100 hover:bg-zinc-200 p-2 rounded-full transition"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
+          <div>
+            <div class="flex items-center space-x-3 mb-1">
+               <span class="bg-orange-100 text-orange-700 text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-full">Νεο Draft</span>
+               <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-zinc-900 uppercase" id="assignEvent">ΜΠΑΛΕΤΟ...</h2>
+            </div>
+            <div class="flex flex-wrap items-center gap-4 mt-3 text-sm text-zinc-600 font-medium uppercase tracking-wide">
+               <span class="flex items-center"><i data-lucide="calendar" class="w-4 h-4 mr-1.5 opacity-70"></i> <span id="assignDate">18 ΜΑΪΟΥ 2026</span></span>
+               <span class="flex items-center"><i data-lucide="clock" class="w-4 h-4 mr-1.5 opacity-70"></i> <span id="assignTime">19:30</span></span>
+               <span class="flex items-center"><i data-lucide="map-pin" class="w-4 h-4 mr-1.5 opacity-70"></i> <span id="assignSpace">ΑΙΘΟΥΣΑ...</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-3">
+            <button onclick="saveDraft()" class="bg-black text-white px-5 py-2.5 text-xs font-bold uppercase tracking-widest hover:bg-zinc-800 transition">Αποθηκευση</button>
+            <button onclick="closeAssignPostsModal(true)" class="text-zinc-400 hover:text-zinc-800 transition bg-zinc-100 hover:bg-zinc-200 p-2.5 rounded-full"><i data-lucide="x" class="w-5 h-5"></i></button>
+        </div>
+      </div>
+      
+      <div class="p-6 sm:p-8 overflow-y-auto flex-1 custom-scrollbar">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden shadow-sm flex flex-col">
+               <div class="bg-zinc-50 border-b border-zinc-200 p-4 shrink-0">
+                  <h3 class="text-xs font-bold text-zinc-800 tracking-widest uppercase">Γενικοι Χωροι</h3>
+               </div>
+               <div class="divide-y divide-zinc-100 flex-1">
+                  <div onclick="openSelectUsherModal('Νέα Είσοδος (Βασ. Σοφίας)')" class="p-4 hover:bg-zinc-50 cursor-pointer transition group relative">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-2">Νέα Είσοδος (Βασ. Σοφίας)</p>
+                     <div class="min-h-[24px] flex items-center flex-wrap gap-2" id="post-nea-eisodos">
+                        <span class="text-xs text-zinc-400 group-hover:text-black italic">Επιλέξτε...</span>
+                     </div>
+                     <div class="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition">
+                         <i data-lucide="plus-circle" class="w-5 h-5 text-black"></i>
+                     </div>
+                  </div>
+                  <div onclick="openSelectUsherModal('Έλεγχος Εισιτηρίων')" class="p-4 hover:bg-zinc-50 cursor-pointer transition group relative">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-2">Έλεγχος Εισιτηρίων</p>
+                     <div class="min-h-[24px] flex items-center flex-wrap gap-2" id="post-elenxos">
+                        <span class="text-xs text-zinc-400 group-hover:text-black italic">Επιλέξτε...</span>
+                     </div>
+                     <div class="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition">
+                         <i data-lucide="plus-circle" class="w-5 h-5 text-black"></i>
+                     </div>
+                  </div>
+                  <div onclick="openSelectUsherModal('Βεστιάριο')" class="p-4 hover:bg-zinc-50 cursor-pointer transition group relative">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-2">Βεστιάριο</p>
+                     <div class="min-h-[24px] flex items-center flex-wrap gap-2" id="post-vestiario">
+                        <span class="text-xs text-zinc-400 group-hover:text-black italic">Επιλέξτε...</span>
+                     </div>
+                     <div class="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition">
+                         <i data-lucide="plus-circle" class="w-5 h-5 text-black"></i>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden shadow-sm flex flex-col">
+               <div class="bg-zinc-50 border-b border-zinc-200 p-4 shrink-0">
+                  <h3 class="text-xs font-bold text-zinc-800 tracking-widest uppercase">Θεωρεια Α</h3>
+               </div>
+               <div class="divide-y divide-zinc-100 flex-1">
+                  <div onclick="openSelectUsherModal('Είσοδος 1')" class="p-4 hover:bg-zinc-50 cursor-pointer transition group relative">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-2">Είσοδος 1</p>
+                     <div class="min-h-[24px] flex items-center flex-wrap gap-2" id="post-eisodos-1">
+                        <span class="text-xs text-zinc-400 group-hover:text-black italic">Επιλέξτε...</span>
+                     </div>
+                     <div class="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition">
+                         <i data-lucide="plus-circle" class="w-5 h-5 text-black"></i>
+                     </div>
+                  </div>
+                  <div onclick="openSelectUsherModal('Είσοδος 2')" class="p-4 hover:bg-zinc-50 cursor-pointer transition group relative">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-2">Είσοδος 2</p>
+                     <div class="min-h-[24px] flex items-center flex-wrap gap-2" id="post-eisodos-2">
+                        <span class="text-xs text-zinc-400 group-hover:text-black italic">Επιλέξτε...</span>
+                     </div>
+                     <div class="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition">
+                         <i data-lucide="plus-circle" class="w-5 h-5 text-black"></i>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden shadow-sm flex flex-col">
+               <div class="bg-zinc-50 border-b border-zinc-200 p-4 shrink-0">
+                  <h3 class="text-xs font-bold text-zinc-800 tracking-widest uppercase">Πλατεια ΑΑΤ</h3>
+               </div>
+               <div class="divide-y divide-zinc-100 flex-1">
+                  <div onclick="openSelectUsherModal('Σκηνή')" class="p-4 hover:bg-zinc-50 cursor-pointer transition group relative">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-2">Σκηνή</p>
+                     <div class="min-h-[24px] flex items-center flex-wrap gap-2" id="post-skini">
+                        <span class="text-xs text-zinc-400 group-hover:text-black italic">Επιλέξτε...</span>
+                     </div>
+                     <div class="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition">
+                         <i data-lucide="plus-circle" class="w-5 h-5 text-black"></i>
+                     </div>
+                  </div>
+                  <div onclick="openSelectUsherModal('Άνω Διάδρομος')" class="p-4 hover:bg-zinc-50 cursor-pointer transition group relative">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-2">Άνω Διάδρομος</p>
+                     <div class="min-h-[24px] flex items-center flex-wrap gap-2" id="post-ano-diadromos">
+                        <span class="text-xs text-zinc-400 group-hover:text-black italic">Επιλέξτε...</span>
+                     </div>
+                     <div class="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition">
+                         <i data-lucide="plus-circle" class="w-5 h-5 text-black"></i>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            
+            <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden shadow-sm flex flex-col">
+               <div class="bg-zinc-50 border-b border-zinc-200 p-4 shrink-0">
+                  <h3 class="text-xs font-bold text-zinc-800 tracking-widest uppercase">Θεωρεια Β</h3>
+               </div>
+               <div class="divide-y divide-zinc-100 flex-1">
+                  <div onclick="openSelectUsherModal('Ασανσέρ')" class="p-4 hover:bg-zinc-50 cursor-pointer transition group relative">
+                     <p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-2">Ασανσέρ (bar Πλατείας)</p>
+                     <div class="min-h-[24px] flex items-center flex-wrap gap-2" id="post-asanser">
+                        <span class="text-xs text-zinc-400 group-hover:text-black italic">Επιλέξτε...</span>
+                     </div>
+                     <div class="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition">
+                         <i data-lucide="plus-circle" class="w-5 h-5 text-black"></i>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Select Usher Modal -->
+  <div id="selectUsherModal" class="fixed inset-0 z-[80] bg-black/60 hidden flex items-center justify-center p-4 backdrop-blur-sm transition-opacity opacity-0">
+    <div class="bg-white w-full max-w-lg shadow-2xl flex flex-col transform scale-95 transition-transform duration-200 bg-white" id="selectUsherContent">
+      <div class="p-5 border-b border-zinc-100 flex justify-between items-center bg-zinc-50">
+        <div>
+          <h2 class="text-sm font-bold tracking-widest text-black uppercase">Αναθεση σε:</h2>
+          <p id="selectUsherPostName" class="text-sm text-zinc-500 mt-1 font-medium">Post Name</p>
+        </div>
+        <button onclick="closeSelectUsherModal()" class="text-zinc-400 hover:text-black transition"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      <div class="p-5 overflow-y-auto max-h-[60vh]">
+         <div class="mb-4 relative">
+             <i data-lucide="search" class="w-4 h-4 absolute left-3 top-2.5 text-zinc-400"></i>
+             <input type="text" placeholder="Αναζήτηση ταξιθέτη (Mock)..." class="w-full pl-9 pr-4 py-2 border border-zinc-300 rounded text-sm focus:outline-none focus:border-black focus:ring-1 focus:ring-black">
+         </div>
+         <div class="space-y-4" id="selectUsherListContainer">
+            <!-- Populated dynamically via JS -->
+         </div>
+      </div>
+      <div class="p-5 border-t border-zinc-100 flex justify-end bg-zinc-50 space-x-3">
+          <button onclick="closeSelectUsherModal()" class="px-4 py-2 text-sm font-bold text-zinc-600 hover:text-black tracking-widest uppercase">Ακυρωση</button>
+          <button onclick="confirmUsherSelection()" class="bg-black text-white px-6 py-2 text-sm font-bold tracking-widest uppercase hover:bg-zinc-800 transition">Αποθηκευση</button>
       </div>
     </div>
   </div>
@@ -319,9 +940,63 @@
       }, 200);
     }
 
-    function publishDraft() {
-        alert("Το πρόγραμμα οριστικοποιήθηκε και οι ταξιθέτες ενημερώθηκαν επιτυχώς!");
-        closeDraftModal();
+    function finalizePerformance() {
+        alert("Το πρόγραμμα εστάλη στον προϊστάμενο επιτυχώς!");
+        closeShiftDetailsModal();
+    }
+
+    function openShiftDetailsModal(title, date, time, space, isDraft = false) {
+       document.getElementById('planoEvent').innerText = title.toUpperCase();
+       document.getElementById('planoDate').innerText = date.toUpperCase();
+       document.getElementById('planoSpace').innerText = space.toUpperCase();
+       
+       const badge = document.getElementById('planoStatusBadge');
+       if(badge) {
+           if (isDraft) {
+               badge.className = "bg-orange-100 text-orange-800 text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-full";
+               badge.innerText = "DRAFT";
+           } else {
+               badge.className = "bg-blue-100 text-blue-700 text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-full";
+               badge.innerText = "ΟΡΙΣΤΙΚΟΠΟΙΗΜΕΝΟ";
+           }
+       }
+       
+       const footer = document.getElementById('shiftDetailsFooter');
+       if (footer) {
+           if (isDraft) {
+               footer.classList.remove('hidden');
+           } else {
+               footer.classList.add('hidden');
+           }
+       }
+       
+       const modal = document.getElementById('shiftDetailsModal');
+       const modalContent = document.getElementById('shiftDetailsContent');
+       modal.classList.remove('hidden');
+       
+       setTimeout(() => {
+         modal.classList.remove('opacity-0');
+         modalContent.classList.remove('scale-95');
+         modalContent.classList.add('scale-100');
+       }, 10);
+    }
+
+    function closeShiftDetailsModal() {
+       const modal = document.getElementById('shiftDetailsModal');
+       const modalContent = document.getElementById('shiftDetailsContent');
+       
+       modal.classList.add('opacity-0');
+       modalContent.classList.remove('scale-100');
+       modalContent.classList.add('scale-95');
+       
+       setTimeout(() => {
+           modal.classList.add('hidden');
+       }, 200);
+    }
+
+    function handleManagerAction(button, action) {
+        button.parentElement.parentElement.remove();
+        alert('Η ενέργεια: "' + action + '" ολοκληρώθηκε επιτυχώς (Mock).');
     }
 
     // Close modal on click outside
@@ -330,6 +1005,365 @@
             closeDraftModal();
         }
     });
+
+    // Close shift details modal on click outside
+    document.getElementById('shiftDetailsModal').addEventListener('click', (e) => {
+        if(e.target === document.getElementById('shiftDetailsModal')) {
+            closeShiftDetailsModal();
+        }
+    });
+
+    // --- Schedule Creation Modal Logic ---
+    const createScheduleModal = document.getElementById('createScheduleModal');
+    const createScheduleContent = document.getElementById('createScheduleContent');
+
+    function openCreateScheduleModal() {
+        createScheduleModal.classList.remove('hidden');
+        body.style.overflow = 'hidden';
+        setTimeout(() => {
+            createScheduleModal.classList.remove('opacity-0');
+            createScheduleContent.classList.remove('scale-95');
+            createScheduleContent.classList.add('scale-100');
+        }, 10);
+    }
+
+    function closeCreateScheduleModal() {
+        createScheduleModal.classList.add('opacity-0');
+        createScheduleContent.classList.remove('scale-100');
+        createScheduleContent.classList.add('scale-95');
+        setTimeout(() => {
+            createScheduleModal.classList.add('hidden');
+            body.style.overflow = '';
+        }, 200);
+    }
+
+    // --- Draft Creation Modals Logic ---
+    const createDraftModal = document.getElementById('createDraftModal');
+    const createDraftContent = document.getElementById('createDraftContent');
+    
+    function openCreateDraftModal() {
+        createDraftModal.classList.remove('hidden');
+        body.style.overflow = 'hidden';
+        setTimeout(() => {
+            createDraftModal.classList.remove('opacity-0');
+            createDraftContent.classList.remove('scale-95');
+            createDraftContent.classList.add('scale-100');
+        }, 10);
+    }
+    
+    function closeCreateDraftModal() {
+        createDraftModal.classList.add('opacity-0');
+        createDraftContent.classList.remove('scale-100');
+        createDraftContent.classList.add('scale-95');
+        setTimeout(() => {
+            createDraftModal.classList.add('hidden');
+            body.style.overflow = '';
+        }, 200);
+    }
+
+    const assignPostsModal = document.getElementById('assignPostsModal');
+    const assignPostsContent = document.getElementById('assignPostsContent');
+    
+    function openAssignPostsModal(event, date, time, space) {
+        // First close the create modal
+        closeCreateDraftModal();
+        
+        // Update DOM elements in the assign modal
+        document.getElementById('assignEvent').innerText = event.toUpperCase();
+        document.getElementById('assignDate').innerText = date.toUpperCase();
+        document.getElementById('assignTime').innerText = time;
+        document.getElementById('assignSpace').innerText = space.toUpperCase();
+        
+        assignPostsModal.classList.remove('hidden');
+        body.style.overflow = 'hidden';
+        setTimeout(() => {
+            assignPostsModal.classList.remove('opacity-0');
+            assignPostsContent.classList.remove('scale-95');
+            assignPostsContent.classList.add('scale-100');
+        }, 200); // slight delay to let previous close
+    }
+    
+    function closeAssignPostsModal(reopenCreate = false) {
+        assignPostsModal.classList.add('opacity-0');
+        assignPostsContent.classList.remove('scale-100');
+        assignPostsContent.classList.add('scale-95');
+        setTimeout(() => {
+            assignPostsModal.classList.add('hidden');
+            if (reopenCreate) {
+                openCreateDraftModal();
+            } else {
+                body.style.overflow = '';
+            }
+        }, 200);
+    }
+
+    const selectUsherModal = document.getElementById('selectUsherModal');
+    const selectUsherContent = document.getElementById('selectUsherContent');
+    let currentPostBeingAssigned = "";
+    
+    function openSelectUsherModal(postName) {
+        currentPostBeingAssigned = postName;
+        document.getElementById('selectUsherPostName').innerText = postName;
+        
+        const container = document.getElementById('selectUsherListContainer');
+        const isSchedule = postName.includes('Μαΐου');
+        
+        if (isSchedule) {
+            container.innerHTML = `
+             <div>
+                 <h3 class="text-xs font-bold text-emerald-700 tracking-widest uppercase mb-2 flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 mr-1.5"></i> Προτεινομενοι <span class="text-[10px] text-zinc-500 font-normal ml-2 normal-case">(Υψηλή διαθεσιμότητα)</span></h3>
+                 <div class="space-y-2 border-l-2 border-emerald-500 pl-3">
+                     <label class="flex items-center space-x-3 p-3 border border-emerald-100 bg-emerald-50/30 rounded hover:bg-emerald-50 cursor-pointer transition">
+                         <input type="checkbox" class="usher-checkbox w-4 h-4 text-black border-zinc-300 rounded focus:ring-black" value="Μαρία Παπά">
+                         <div class="flex items-center space-x-3 w-full">
+                             <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-xs font-bold text-emerald-800 shrink-0">ΜΠ</div>
+                             <div class="flex-1">
+                                 <div class="flex justify-between items-center">
+                                     <span class="text-sm font-semibold text-black">Μαρία Παπά</span>
+                                     <span class="text-[10px] text-emerald-600 font-bold tracking-widest">98% ΑΞΙΟΠΙΣΤΙΑ</span>
+                                 </div>
+                                 <div class="flex justify-between items-center mt-0.5">
+                                    <span class="text-xs text-zinc-500">Πάντα συνεπής, 0 ακυρώσεις.</span>
+                                    <span class="text-[10px] text-zinc-500 font-medium flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> 32h/μήνα</span>
+                                 </div>
+                             </div>
+                         </div>
+                     </label>
+                     <label class="flex items-center space-x-3 p-3 border border-emerald-100 bg-emerald-50/30 rounded hover:bg-emerald-50 cursor-pointer transition">
+                         <input type="checkbox" class="usher-checkbox w-4 h-4 text-black border-zinc-300 rounded focus:ring-black" value="Νίκος Γεωργίου">
+                         <div class="flex items-center space-x-3 w-full">
+                             <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-xs font-bold text-emerald-800 shrink-0">ΝΓ</div>
+                             <div class="flex-1">
+                                 <div class="flex justify-between items-center">
+                                     <span class="text-sm font-semibold text-black">Νίκος Γεωργίου</span>
+                                     <span class="text-[10px] text-emerald-600 font-bold tracking-widest">95% ΑΞΙΟΠΙΣΤΙΑ</span>
+                                 </div>
+                                 <div class="flex justify-between items-center mt-0.5">
+                                    <span class="text-xs text-zinc-500">Συνεπής, δε δουλεύει στις 17/5.</span>
+                                    <span class="text-[10px] text-zinc-500 font-medium flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> 28h/μήνα</span>
+                                 </div>
+                                 <div class="mt-1 flex items-start space-x-1.5 p-1.5 bg-blue-50/50 rounded-sm border border-blue-100">
+                                    <i data-lucide="message-square" class="w-3 h-3 text-blue-500 mt-0.5 shrink-0"></i>
+                                    <span class="text-[10px] leading-tight text-blue-800 italic">"17/5 θα λείπω εκτός Αθηνών"</span>
+                                 </div>
+                             </div>
+                         </div>
+                     </label>
+                 </div>
+             </div>
+             <div>
+                 <h3 class="text-xs font-bold text-zinc-500 tracking-widest uppercase mb-2 mt-4 pt-4 border-t border-zinc-100">Υπολοιποι Ταξιθετες</h3>
+                 <div class="space-y-2">
+                     <label class="flex items-center space-x-3 p-3 border border-zinc-200 rounded hover:bg-zinc-50 cursor-pointer transition opacity-80 hover:opacity-100">
+                         <input type="checkbox" class="usher-checkbox w-4 h-4 text-black border-zinc-300 rounded focus:ring-black" value="Γιώργος Παπαδόπουλος">
+                         <div class="flex items-center space-x-3 w-full">
+                             <div class="w-8 h-8 rounded-full bg-zinc-200 flex items-center justify-center text-xs font-bold text-zinc-600 shrink-0">ΓΠ</div>
+                             <div class="flex-1">
+                                 <div class="flex justify-between items-center">
+                                     <span class="text-sm font-semibold text-black">Γιώργος Παπαδόπουλος</span>
+                                     <span class="text-[10px] text-zinc-500 font-medium flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> 18h/μήνα</span>
+                                 </div>
+                                 <div class="text-[10px] text-zinc-400 mt-0.5">Μέτρια διαθεσιμότητα.</div>
+                                 <div class="mt-1 flex items-start space-x-1.5 p-1.5 bg-blue-50/50 rounded-sm border border-blue-100">
+                                    <i data-lucide="message-square" class="w-3 h-3 text-blue-500 mt-0.5 shrink-0"></i>
+                                    <span class="text-[10px] leading-tight text-blue-800 italic">"Θα προτιμούσα πρωινές βάρδιες αυτή την εβδομάδα."</span>
+                                 </div>
+                             </div>
+                         </div>
+                     </label>
+                     <label class="flex items-center space-x-3 p-3 border border-zinc-200 rounded hover:bg-zinc-50 cursor-pointer transition opacity-80 hover:opacity-100">
+                         <input type="checkbox" class="usher-checkbox w-4 h-4 text-black border-zinc-300 rounded focus:ring-black" value="Ελένη Νικολάου">
+                         <div class="flex items-center space-x-3 w-full">
+                             <div class="w-8 h-8 rounded-full bg-zinc-200 flex items-center justify-center text-xs font-bold text-zinc-600 shrink-0">ΕΝ</div>
+                             <div class="flex-1">
+                                 <div class="flex justify-between items-center">
+                                     <span class="text-sm font-semibold text-black">Ελένη Νικολάου</span>
+                                     <span class="text-[10px] text-zinc-500 font-medium flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> 40h/μήνα</span>
+                                 </div>
+                                 <div class="text-[10px] text-zinc-400 mt-0.5">Ενδέχεται να χρειαστεί αλλαγή βάρδιας.</div>
+                             </div>
+                         </div>
+                     </label>
+                     <label class="flex items-center space-x-3 p-3 border border-zinc-200 rounded hover:bg-zinc-50 cursor-pointer transition opacity-80 hover:opacity-100">
+                         <input type="checkbox" class="usher-checkbox w-4 h-4 text-black border-zinc-300 rounded focus:ring-black" value="Άννα Δημητρίου">
+                         <div class="flex items-center space-x-3 w-full">
+                             <div class="w-8 h-8 rounded-full bg-zinc-200 flex items-center justify-center text-xs font-bold text-zinc-600 shrink-0">ΑΔ</div>
+                             <div class="flex-1">
+                                 <div class="flex justify-between items-start">
+                                    <div>
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-sm font-semibold text-black">Άννα Δημητρίου</span>
+                                            <span class="text-[10px] text-orange-600 font-bold bg-orange-50 px-2 py-0.5 rounded tracking-widest">ΡΙΣΚΟ</span>
+                                        </div>
+                                        <span class="text-[10px] text-zinc-400 mt-0.5 block">Συχνές ακυρώσεις λόγω διαβάσματος.</span>
+                                    </div>
+                                    <span class="text-[10px] text-zinc-500 font-medium flex items-center gap-1 mt-1"><i data-lucide="clock" class="w-3 h-3"></i> 24h/μήνα</span>
+                                 </div>
+                                 <div class="mt-1 flex items-start space-x-1.5 p-1.5 bg-blue-50/50 rounded-sm border border-blue-100">
+                                    <i data-lucide="message-square" class="w-3 h-3 text-blue-500 mt-0.5 shrink-0"></i>
+                                    <span class="text-[10px] leading-tight text-blue-800 italic">"Έχω εξεταστική, μόνο ΣΚ."</span>
+                                 </div>
+                             </div>
+                         </div>
+                     </label>
+                 </div>
+             </div>`;
+        } else {
+            container.innerHTML = `
+             <div>
+                 <h3 class="text-xs font-bold text-emerald-700 tracking-widest uppercase mb-2 flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 mr-1.5"></i> Προτεινομενοι <span class="text-[10px] text-zinc-500 font-normal ml-2 normal-case">(Με βάση ιστορικό πόστου)</span></h3>
+                 <div class="space-y-2 border-l-2 border-emerald-500 pl-3">
+                     <label class="flex items-center space-x-3 p-3 border border-emerald-100 bg-emerald-50/30 rounded hover:bg-emerald-50 cursor-pointer transition">
+                         <input type="checkbox" class="usher-checkbox w-4 h-4 text-black border-zinc-300 rounded focus:ring-black" value="Μαρία Παπά">
+                         <div class="flex items-center space-x-3 w-full">
+                             <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-xs font-bold text-emerald-800 shrink-0">ΜΠ</div>
+                             <div class="flex-1">
+                                 <div class="flex justify-between items-center">
+                                     <span class="text-sm font-semibold text-black">Μαρία Παπά</span>
+                                     <span class="text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded tracking-widest">ΕΜΠΕΙΡΙΑ</span>
+                                 </div>
+                                 <span class="text-xs text-zinc-500">Έχει κάνει αυτή τη θέση 15 φορές στο παρελθόν.</span>
+                             </div>
+                         </div>
+                     </label>
+                     <label class="flex items-center space-x-3 p-3 border border-emerald-100 bg-emerald-50/30 rounded hover:bg-emerald-50 cursor-pointer transition">
+                         <input type="checkbox" class="usher-checkbox w-4 h-4 text-black border-zinc-300 rounded focus:ring-black" value="Νίκος Γεωργίου">
+                         <div class="flex items-center space-x-3 w-full">
+                             <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-xs font-bold text-emerald-800 shrink-0">ΝΓ</div>
+                             <div class="flex-1">
+                                 <div class="flex justify-between items-center">
+                                     <span class="text-sm font-semibold text-black">Νίκος Γεωργίου</span>
+                                     <span class="text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded tracking-widest">ΕΜΠΕΙΡΙΑ</span>
+                                 </div>
+                                 <span class="text-xs text-zinc-500">Έχει κάνει αυτή τη θέση 8 φορές στο παρελθόν.</span>
+                             </div>
+                         </div>
+                     </label>
+                 </div>
+             </div>
+             <div>
+                 <h3 class="text-xs font-bold text-zinc-500 tracking-widest uppercase mb-2 mt-4 pt-4 border-t border-zinc-100">Υπολοιποι Ταξιθετες</h3>
+                 <div class="space-y-2">
+                     <label class="flex items-center space-x-3 p-3 border border-zinc-200 rounded hover:bg-zinc-50 cursor-pointer transition opacity-80 hover:opacity-100">
+                         <input type="checkbox" class="usher-checkbox w-4 h-4 text-black border-zinc-300 rounded focus:ring-black" value="Γιώργος Παπαδόπουλος">
+                         <div class="flex items-center space-x-3 w-full">
+                             <div class="w-8 h-8 rounded-full bg-zinc-200 flex items-center justify-center text-xs font-bold text-zinc-600 shrink-0">ΓΠ</div>
+                             <div class="flex-1">
+                                 <span class="text-sm font-semibold text-black">Γιώργος Παπαδόπουλος</span>
+                                 <div class="text-[10px] text-zinc-400 mt-0.5">Κανένα πρόβλημα με τη γενική του παρουσία.</div>
+                             </div>
+                         </div>
+                     </label>
+                     <label class="flex items-center space-x-3 p-3 border border-zinc-200 rounded hover:bg-zinc-50 cursor-pointer transition opacity-80 hover:opacity-100">
+                         <input type="checkbox" class="usher-checkbox w-4 h-4 text-black border-zinc-300 rounded focus:ring-black" value="Ελένη Νικολάου">
+                         <div class="flex items-center space-x-3 w-full">
+                             <div class="w-8 h-8 rounded-full bg-zinc-200 flex items-center justify-center text-xs font-bold text-zinc-600 shrink-0">ΕΝ</div>
+                             <div class="flex-1">
+                                 <div class="flex items-center gap-2">
+                                     <span class="text-sm font-semibold text-black">Ελένη Νικολάου</span>
+                                     <span class="text-[10px] text-amber-600 font-bold bg-amber-50 px-2 py-0.5 rounded tracking-widest">ΣΧΕΤΙΚΑ ΝΕΑ</span>
+                                 </div>
+                                 <div class="text-[10px] text-zinc-400 mt-0.5">Δεν έχει μπει ξανά σε αυτή τη θέση.</div>
+                             </div>
+                         </div>
+                     </label>
+                     <label class="flex items-center space-x-3 p-3 border border-zinc-200 rounded hover:bg-zinc-50 cursor-pointer transition opacity-80 hover:opacity-100">
+                         <input type="checkbox" class="usher-checkbox w-4 h-4 text-black border-zinc-300 rounded focus:ring-black" value="Άννα Δημητρίου">
+                         <div class="flex items-center space-x-3 w-full">
+                             <div class="w-8 h-8 rounded-full bg-zinc-200 flex items-center justify-center text-xs font-bold text-zinc-600 shrink-0">ΑΔ</div>
+                             <div class="flex-1">
+                                 <span class="text-sm font-semibold text-black">Άννα Δημητρίου</span>
+                                 <span class="text-[10px] text-zinc-400 mt-0.5 block">Διαθέσιμη για αυτό το πόστο.</span>
+                             </div>
+                         </div>
+                     </label>
+                 </div>
+             </div>`;
+        }
+        
+        lucide.createIcons();
+
+        // reset checkboxes dummy logic
+        document.querySelectorAll('.usher-checkbox').forEach(cb => cb.checked = false);
+        
+        selectUsherModal.classList.remove('hidden');
+        setTimeout(() => {
+            selectUsherModal.classList.remove('opacity-0');
+            selectUsherContent.classList.remove('scale-95');
+            selectUsherContent.classList.add('scale-100');
+        }, 10);
+    }
+    
+    function closeSelectUsherModal() {
+        selectUsherModal.classList.add('opacity-0');
+        selectUsherContent.classList.remove('scale-100');
+        selectUsherContent.classList.add('scale-95');
+        setTimeout(() => {
+            selectUsherModal.classList.add('hidden');
+        }, 200);
+    }
+    
+    function confirmUsherSelection() {
+        const selected = Array.from(document.querySelectorAll('.usher-checkbox:checked')).map(cb => cb.value);
+        if(selected.length === 0) {
+           closeSelectUsherModal();
+           return;
+        }
+        
+        // Find which post this is
+        let postContainerId = "";
+        let idMapping = {
+            'Νέα Είσοδος (Βασ. Σοφίας)': 'post-nea-eisodos',
+            'Έλεγχος Εισιτηρίων': 'post-elenxos',
+            'Βεστιάριο': 'post-vestiario',
+            'Είσοδος 1': 'post-eisodos-1',
+            'Είσοδος 2': 'post-eisodos-2',
+            'Σκηνή': 'post-skini',
+            'Άνω Διάδρομος': 'post-ano-diadromos',
+            'Ασανσέρ(bar Πλατείας)': 'post-asanser',
+            'Ασανσέρ (bar Πλατείας)': 'post-asanser',
+            '18 Μαΐου - Μπαλέτο': 'schedule-day-1-perf-1',
+            '20 Μαΐου - Συναυλία': 'schedule-day-3-perf-1',
+            '22 Μαΐου - Όπερα': 'schedule-day-5-perf-1',
+            '23 Μαΐου - Θέατρο': 'schedule-day-6-perf-1',
+            '23 Μαΐου - Jazz': 'schedule-day-6-perf-2',
+            '24 Μαΐου - Παιδικό': 'schedule-day-7-perf-1'
+        };
+        
+        postContainerId = idMapping[currentPostBeingAssigned];
+        if (postContainerId) {
+            const container = document.getElementById(postContainerId);
+            container.innerHTML = ""; // clear previous
+            selected.forEach(name => {
+                const span = document.createElement('span');
+                span.className = "bg-zinc-100 text-zinc-900 px-2 py-0.5 rounded text-xs font-semibold flex items-center shadow-sm border border-zinc-200 uppercase";
+                span.innerText = name.toUpperCase();
+                container.appendChild(span);
+            });
+        }
+        
+        closeSelectUsherModal();
+    }
+    
+    function saveDraft() {
+        alert("Το draft αποθηκεύτηκε επιτυχώς (Mock)!");
+        closeAssignPostsModal();
+    }
+    
+    // Close on outClick
+    createScheduleModal.addEventListener('click', (e) => {
+        if(e.target === createScheduleModal) closeCreateScheduleModal();
+    });
+    createDraftModal.addEventListener('click', (e) => {
+        if(e.target === createDraftModal) closeCreateDraftModal();
+    });
+    assignPostsModal.addEventListener('click', (e) => {
+        if(e.target === assignPostsModal) closeAssignPostsModal(false);
+    });
+    selectUsherModal.addEventListener('click', (e) => {
+        if(e.target === selectUsherModal) closeSelectUsherModal();
+    });
+
   </script>
 </body>
 </html>
